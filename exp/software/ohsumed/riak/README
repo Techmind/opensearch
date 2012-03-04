@@ -1,6 +1,6 @@
 #assume riak is installed and search is enabled
 # this TEST also excludes with|of|and|the|a words because they return too much results and cause riak to fail
-
+# i'm not that GOOD tiwh maven and java so  paths 
 #install search hook
 
 search-cmd install meddata
@@ -19,7 +19,7 @@ wget http://google-maven-repository.googlecode.com/svn-history/r559/repository/c
 wget http://mirrors.axint.net/apache//httpcomponents/httpclient/binary/httpcomponents-client-4.1.3-bin.zip
 unzip httpcomponents-client-4.1.3-bin.zip
 
-javac  -cp /home/bogunov/search/opensearch/exp/software/ohsumed/riak/riak-java-client/target/riak-client-1.0.5-SNAPSHOT.jar Index.java
+javac  -cp riak/riak-java-client/target/riak-client-1.0.5-SNAPSHOT.jar Index.java
 
 # get solr library 
 
@@ -35,7 +35,7 @@ unzip commons-codec-1.6-bin.zip
 
 #run index
 
-time java -cp /home/bogunov/search/opensearch/exp/software/ohsumed/riak/riak-java-client/target/riak-client-1.0.5-SNAPSHOT.jar:protobuf-java-2.2.0.jar:httpcomponents-client-4.1.3/lib/httpclient-4.1.3.jar:. Index
+time java -cp riak-java-client/target/riak-client-1.0.5-SNAPSHOT.jar:protobuf-java-2.2.0.jar:httpcomponents-client-4.1.3/lib/httpclient-4.1.3.jar:. Index
 
 # run search
 time java -cp ./solr-solrj-3.5.0.jar:commons-httpclient-3.1.jar:slf4j-1.6.4/slf4j-api-1.6.4.jar:commons-logging-1.1.1/commons-logging-1.1.1.jar:commons-codec-1.6/commons-codec-1.6.jar:. Search
