@@ -12,7 +12,7 @@ import org.apache.solr.common.*;
 public class Search {
 	public static void main (String[] argv) throws IOException , org.apache.solr.client.solrj.SolrServerException {
 
-		CommonsHttpSolrServer server = new CommonsHttpSolrServer("http://172.18.40.178:8098/solr/meddata/");
+		CommonsHttpSolrServer server = new CommonsHttpSolrServer("http://127.0.0.1:8098/solr/meddata/");
 		server.setParser(new XMLResponseParser());
 
 		SolrQuery query = new SolrQuery();
