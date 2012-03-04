@@ -1,0 +1,48 @@
+#install search hook
+
+search-cmd install meddata
+
+# install java client
+
+git clone https://github.com/basho/riak-java-client
+
+cd riak-java-client
+
+mvn install 
+
+cd ..
+
+wget http://google-maven-repository.googlecode.com/svn-history/r559/repository/com/google/protobuf/protobuf-java/2.2.0/protobuf-java-2.2.0.jar
+wget http://mirrors.axint.net/apache//httpcomponents/httpclient/binary/httpcomponents-client-4.1.3-bin.zip
+unzip httpcomponents-client-4.1.3-bin.zip
+
+javac  -cp /home/bogunov/search/opensearch/exp/software/ohsumed/riak/riak-java-client/target/riak-client-1.0.5-SNAPSHOT.jar Index.java
+
+# get solr library 
+
+wget -U NoSuchBrowser/1.0 http://repo1.maven.org/maven2/org/apache/solr/solr-solrj/3.5.0/solr-solrj-3.5.0.jar
+
+wget http://mirrors.ibiblio.org/pub/mirrors/maven/commons-httpclient/jars/commons-httpclient-3.1.jar
+wget http://slf4j.org/dist/slf4j-1.6.4.zip
+unzip slf4j-1.6.4.zip
+wget http://apache.mirrors.hoobly.com//commons/logging/binaries/commons-logging-1.1.1-bin.zip
+unzip commons-logging-1.1.1-bin.zip
+wget http://www.ecoficial.com/apachemirror//commons/codec/binaries/commons-codec-1.6-bin.zip
+unzip commons-codec-1.6-bin.zip
+
+# filter out with word it  muchs too many)
+cat ../queries.txt | sed "s/\(with\|of\|and\|the\|a\) //g" > ../queries_riak.txt
+
+
+#run index
+
+time java -cp /home/bogunov/search/opensearch/exp/software/ohsumed/riak/riak-java-client/target/riak-client-1.0.5-SNAPSHOT.jar:protobuf-java-2.2.0.jar:httpcomponents-client-4.1.3/lib/httpclient-4.1.3.jar:. Index
+
+# run search
+time java -cp ./solr-solrj-3.5.0.jar:commons-httpclient-3.1.jar:slf4j-1.6.4/slf4j-api-1.6.4.jar:commons-logging-1.1.1/commons-logging-1.1.1.jar:commons-codec-1.6/commons-codec-1.6.jar:. Search
+
+# compute relevance
+
+cd ../
+cat riak/results.txt | python scorer.py
+
