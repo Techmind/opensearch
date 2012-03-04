@@ -1,3 +1,6 @@
+#assume riak is installed and search is enabled
+# this TEST also excludes with|of|and|the|a words because they return too much results and cause riak to fail
+
 #install search hook
 
 search-cmd install meddata
@@ -29,10 +32,6 @@ wget http://apache.mirrors.hoobly.com//commons/logging/binaries/commons-logging-
 unzip commons-logging-1.1.1-bin.zip
 wget http://www.ecoficial.com/apachemirror//commons/codec/binaries/commons-codec-1.6-bin.zip
 unzip commons-codec-1.6-bin.zip
-
-# filter out with word it  muchs too many)
-cat ../queries.txt | sed "s/\(with\|of\|and\|the\|a\) //g" > ../queries_riak.txt
-
 
 #run index
 
